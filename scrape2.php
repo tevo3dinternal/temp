@@ -26,12 +26,12 @@ $content = file_get_contents($tickerUrl, false, $context);
 // echo $content;
 
 //send measurement, tag and value to influx
-sendDB($content, $tag);
+sendDB($content, $tickerUrl);
 
 
 //send to influxdb
-function sendDB($val, $tagname) {
-$curl = "curl -i -XPOST 'http://192.168.100.X:8086/write?db=crypto' --data-binary 'Bitcoinaverage,pair=BTCUSD ".$tagname."=".$val."'";
+function sendDB($val, $tickerUrl) {
+$curl = "curl -i -XPOST 'http://192.168.100.X:8086/write?db=crypto' --data-binary 'Bitcoinaverage,pair=".$tickerUrl." ".$tickerUrl."=".$val."'";
 $execsr = exec($curl);
 }
 
